@@ -7,10 +7,35 @@ import { useState } from "react";
 
 const Index = () => {
   const [formData, setFormData] = useState({ name: "", phone: "", email: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('https://functions.poehali.dev/edca3b3d-eada-4f34-a2f2-2cbe28f2adea', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: "", phone: "", email: "" });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const scrollToForm = () => {
@@ -573,9 +598,27 @@ const Index = () => {
                   />
                 </div>
 
-                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white py-6 text-lg">
-                  Получить программу и КП
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="w-full bg-primary hover:bg-primary/90 text-white py-6 text-lg disabled:opacity-50"
+                >
+                  {isSubmitting ? 'Отправка...' : 'Получить программу и КП'}
                 </Button>
+
+                {submitStatus === 'success' && (
+                  <div className="flex items-center gap-2 text-accent bg-accent/10 p-4 rounded-lg">
+                    <Icon name="CheckCircle2" size={20} />
+                    <p>Спасибо! Мы свяжемся с вами в ближайшее время.</p>
+                  </div>
+                )}
+
+                {submitStatus === 'error' && (
+                  <div className="flex items-center gap-2 text-destructive bg-destructive/10 p-4 rounded-lg">
+                    <Icon name="AlertCircle" size={20} />
+                    <p>Ошибка отправки. Попробуйте позже или напишите на email@btbsales.ru</p>
+                  </div>
+                )}
               </form>
             </CardContent>
           </Card>

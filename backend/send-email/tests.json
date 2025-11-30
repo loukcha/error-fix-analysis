@@ -1,0 +1,34 @@
+{
+  "tests": [
+    {
+      "name": "Test OPTIONS request",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Test valid form submission",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "name": "Test User",
+        "phone": "+79001234567",
+        "email": "test@example.com"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Test missing fields",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "name": "Test User"
+      },
+      "expectedStatus": 400
+    }
+  ]
+}
