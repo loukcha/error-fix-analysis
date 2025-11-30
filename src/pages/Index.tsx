@@ -47,7 +47,36 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <section className="bg-gradient-to-br from-[#1A1F2C] to-[#2A3F5C] text-white py-20 px-4">
+      <header className="bg-white border-b sticky top-0 z-50 shadow-sm">
+        <div className="container max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Icon name="Briefcase" className="text-primary" size={28} />
+            <span className="text-xl font-bold text-foreground">ИИ в закупках</span>
+          </div>
+          
+          <nav className="hidden md:flex items-center gap-6">
+            <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">
+              О тренинге
+            </a>
+            <a href="#program" className="text-muted-foreground hover:text-foreground transition-colors">
+              Программа
+            </a>
+            <a href="#contact-form" className="text-muted-foreground hover:text-foreground transition-colors">
+              Контакты
+            </a>
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <a href="mailto:email@btbsales.ru" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Icon name="Mail" size={20} />
+            </a>
+            <a href="tel:+79000000000" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Icon name="Phone" size={20} />
+            </a>
+          </div>
+        </div>
+      </header>
+      <section id="about" className="bg-gradient-to-br from-[#1A1F2C] to-[#2A3F5C] text-white py-20 px-4">
         <div className="container max-w-6xl mx-auto">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
             ИИ в закупках: сделайте работу байеров быстрее и проще — уже завтра
@@ -211,7 +240,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-gray-50">
+      <section id="program" className="py-16 px-4 bg-gray-50">
         <div className="container max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center text-foreground">
             Программа тренинга (8 часов практики)
@@ -625,8 +654,55 @@ const Index = () => {
         </div>
       </section>
 
-      <footer className="py-8 px-4 bg-[#1A1F2C] text-white/60 text-center text-sm">
-        <p>© 2024 ИИ в закупках. Все права защищены.</p>
+      <footer className="py-12 px-4 bg-[#1A1F2C] text-white">
+        <div className="container max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <Icon name="Briefcase" className="text-primary" size={24} />
+                <span className="text-lg font-bold">ИИ в закупках</span>
+              </div>
+              <p className="text-white/60 text-sm">
+                Практический тренинг для закупщиков по применению искусственного интеллекта в работе.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-bold mb-4">Контакты</h3>
+              <div className="space-y-2 text-sm text-white/60">
+                <a href="mailto:email@btbsales.ru" className="flex items-center gap-2 hover:text-white transition-colors">
+                  <Icon name="Mail" size={16} />
+                  email@btbsales.ru
+                </a>
+                <a href="tel:+79000000000" className="flex items-center gap-2 hover:text-white transition-colors">
+                  <Icon name="Phone" size={16} />
+                  +7 (900) 000-00-00
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-bold mb-4">Информация</h3>
+              <div className="space-y-2 text-sm">
+                <a href="#privacy" className="block text-white/60 hover:text-white transition-colors">
+                  Политика конфиденциальности
+                </a>
+                <a href="#terms" className="block text-white/60 hover:text-white transition-colors">
+                  Условия использования
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-white/10 pt-8">
+            <div className="text-center text-white/40 text-sm">
+              <p className="mb-2">© 2024 ИИ в закупках. Все права защищены.</p>
+              <p className="text-xs">
+                Используя данный сайт, вы соглашаетесь с политикой конфиденциальности и обработкой персональных данных.
+              </p>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
   );
