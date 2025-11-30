@@ -684,10 +684,10 @@ const Index = () => {
             <div>
               <h3 className="font-bold mb-4">Информация</h3>
               <div className="space-y-2 text-sm">
-                <a href="#privacy" className="block text-white/60 hover:text-white transition-colors">
+                <a href="/privacy" className="block text-white/60 hover:text-white transition-colors">
                   Политика конфиденциальности
                 </a>
-                <a href="#terms" className="block text-white/60 hover:text-white transition-colors">
+                <a href="/terms" className="block text-white/60 hover:text-white transition-colors">
                   Условия использования
                 </a>
               </div>
