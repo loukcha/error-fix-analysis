@@ -56,11 +56,11 @@ const Index = () => {
           </div>
           
           <nav className="hidden md:flex items-center gap-6">
-            <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">
-              О тренинге
-            </a>
             <a href="#program" className="text-muted-foreground hover:text-foreground transition-colors">
               Программа
+            </a>
+            <a href="#results" className="text-muted-foreground hover:text-foreground transition-colors">
+              Результаты
             </a>
             <a href="#contact-form" className="text-muted-foreground hover:text-foreground transition-colors">
               Контакты
@@ -89,18 +89,18 @@ const Index = () => {
           <div className="md:hidden border-t bg-white">
             <nav className="container max-w-6xl mx-auto px-4 py-4 flex flex-col gap-4">
               <a 
-                href="#about" 
-                className="text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                О тренинге
-              </a>
-              <a 
                 href="#program" 
                 className="text-muted-foreground hover:text-foreground transition-colors py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Программа
+              </a>
+              <a 
+                href="#results" 
+                className="text-muted-foreground hover:text-foreground transition-colors py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Результаты
               </a>
               <a 
                 href="#contact-form" 
@@ -121,7 +121,7 @@ const Index = () => {
           </div>
         )}
       </header>
-      <section id="about" className="bg-gradient-to-br from-[#1A1F2C] to-[#2A3F5C] text-white py-12 md:py-20 px-4">
+      <section className="bg-gradient-to-br from-[#1A1F2C] to-[#2A3F5C] text-white py-12 md:py-20 px-4">
         <div className="container max-w-6xl mx-auto">
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 leading-tight">
             ИИ в закупках: сделайте работу байеров быстрее и проще — уже завтра
@@ -524,7 +524,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-12 md:py-16 px-4">
+      <section id="results" className="py-12 md:py-16 px-4">
         <div className="container max-w-6xl mx-auto">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-10 text-center text-foreground">
             Что команда получит на следующий день

@@ -1,13 +1,14 @@
 import json
 import os
 from typing import Dict, Any
-import urllib.request
-import urllib.parse
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     '''
-    Business: Send contact form data to email via Telegram
+    Business: Send contact form data to email via SMTP
     Args: event with httpMethod, body (name, phone, email)
     Returns: HTTP response with success/error status
     '''
@@ -52,35 +53,44 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             'body': json.dumps({'error': 'All fields are required'})
         }
     
-    # Сохраняем заявку в простую базу данных или отправляем в Telegram
-    message = f"""🔔 Новая заявка с сайта "ИИ в закупках"
-
-👤 Имя: {name}
-📞 Телефон: {phone}
-📧 Email: {email}
-
-Отправьте информацию на: email@btbsales.ru"""
+    # Получаем SMTP настройки из переменных окружения
+    smtp_host = os.environ.get('SMTP_HOST', 'smtp.gmail.com')
+    smtp_port = int(os.environ.get('SMTP_PORT', '587'))
+    smtp_user = os.environ.get('SMTP_USER', '')
+    smtp_password = os.environ.get('SMTP_PASSWORD', '')
+    recipient_email = os.environ.get('RECIPIENT_EMAIL', 'email@btbsales.ru')
     
-    telegram_bot_token = os.environ.get('TELEGRAM_BOT_TOKEN', '')
-    telegram_chat_id = os.environ.get('TELEGRAM_CHAT_ID', '')
+    # Формируем письмо
+    email_body = f"""Новая заявка с сайта "ИИ в закупках"
+
+Имя: {name}
+Телефон: {phone}
+Email: {email}
+
+---
+Дата и время: {context.request_id}"""
     
-    # Если есть Telegram - отправляем туда, если нет - просто логируем
-    if telegram_bot_token and telegram_chat_id:
+    msg = MIMEMultipart()
+    msg['From'] = smtp_user if smtp_user else 'noreply@btbsales.ru'
+    msg['To'] = recipient_email
+    msg['Subject'] = f'Новая заявка от {name}'
+    msg.attach(MIMEText(email_body, 'plain', 'utf-8'))
+    
+    # Логируем заявку
+    print(f"New lead: {name} | {phone} | {email} -> {recipient_email}")
+    
+    # Пытаемся отправить email если настроен SMTP
+    if smtp_user and smtp_password:
         try:
-            url = f'https://api.telegram.org/bot{telegram_bot_token}/sendMessage'
-            data = urllib.parse.urlencode({
-                'chat_id': telegram_chat_id,
-                'text': message,
-                'parse_mode': 'HTML'
-            }).encode()
-            
-            req = urllib.request.Request(url, data=data)
-            urllib.request.urlopen(req)
+            server = smtplib.SMTP(smtp_host, smtp_port)
+            server.starttls()
+            server.login(smtp_user, smtp_password)
+            server.send_message(msg)
+            server.quit()
+            print(f"Email sent successfully to {recipient_email}")
         except Exception as e:
-            print(f"Telegram send error: {e}")
-    
-    # Логируем в консоль (будет видно в логах облачной функции)
-    print(f"New lead: {name} | {phone} | {email}")
+            print(f"SMTP send error: {e}")
+            # Не возвращаем ошибку пользователю, просто логируем
     
     return {
         'statusCode': 200,
@@ -92,6 +102,6 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         'body': json.dumps({
             'success': True, 
             'message': 'Заявка получена. Мы свяжемся с вами в ближайшее время.',
-            'recipient': 'email@btbsales.ru'
+            'recipient': recipient_email
         })
     }
