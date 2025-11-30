@@ -17,7 +17,7 @@ const Index = () => {
     setSubmitStatus('idle');
 
     try {
-      const response = await fetch('https://functions.poehali.dev/edca3b3d-eada-4f34-a2f2-2cbe28f2adea', {
+      const response = await fetch('/send-mail.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
