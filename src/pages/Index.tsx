@@ -9,6 +9,7 @@ const Index = () => {
   const [formData, setFormData] = useState({ name: "", phone: "", email: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,7 +52,7 @@ const Index = () => {
         <div className="container max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Icon name="Briefcase" className="text-primary" size={28} />
-            <span className="text-xl font-bold text-foreground">ИИ в закупках</span>
+            <span className="text-xl md:text-2xl font-bold text-foreground">ИИ в закупках</span>
           </div>
           
           <nav className="hidden md:flex items-center gap-6">
@@ -66,7 +67,7 @@ const Index = () => {
             </a>
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-3">
             <a href="mailto:email@btbsales.ru" className="text-muted-foreground hover:text-foreground transition-colors">
               <Icon name="Mail" size={20} />
             </a>
@@ -74,33 +75,77 @@ const Index = () => {
               <Icon name="Phone" size={20} />
             </a>
           </div>
+
+          <button
+            className="md:hidden"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <Icon name={isMobileMenuOpen ? "X" : "Menu"} size={24} />
+          </button>
         </div>
+
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t bg-white">
+            <nav className="container max-w-6xl mx-auto px-4 py-4 flex flex-col gap-4">
+              <a 
+                href="#about" 
+                className="text-muted-foreground hover:text-foreground transition-colors py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                О тренинге
+              </a>
+              <a 
+                href="#program" 
+                className="text-muted-foreground hover:text-foreground transition-colors py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Программа
+              </a>
+              <a 
+                href="#contact-form" 
+                className="text-muted-foreground hover:text-foreground transition-colors py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Контакты
+              </a>
+              <div className="flex items-center gap-4 pt-2 border-t">
+                <a href="mailto:email@btbsales.ru" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Icon name="Mail" size={20} />
+                </a>
+                <a href="tel:+79000000000" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Icon name="Phone" size={20} />
+                </a>
+              </div>
+            </nav>
+          </div>
+        )}
       </header>
-      <section id="about" className="bg-gradient-to-br from-[#1A1F2C] to-[#2A3F5C] text-white py-20 px-4">
+      <section id="about" className="bg-gradient-to-br from-[#1A1F2C] to-[#2A3F5C] text-white py-12 md:py-20 px-4">
         <div className="container max-w-6xl mx-auto">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 leading-tight">
             ИИ в закупках: сделайте работу байеров быстрее и проще — уже завтра
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-4xl">
+          <p className="text-lg md:text-xl lg:text-2xl mb-6 md:mb-8 text-blue-100 max-w-4xl">
             Однодневный практический интенсив для закупщиков и категорийных менеджеров, который помогает автоматизировать до 50% рутины.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-10">
             <div className="flex items-start gap-3">
               <Icon name="FileCheck" className="text-primary shrink-0 mt-1" size={24} />
-              <p className="text-lg">Автоматический анализ КП и спецификаций</p>
+              <p className="text-base md:text-lg">Автоматический анализ КП и спецификаций</p>
             </div>
             <div className="flex items-start gap-3">
               <Icon name="Mail" className="text-primary shrink-0 mt-1" size={24} />
-              <p className="text-lg">Быстрая подготовка писем и запросов поставщикам</p>
+              <p className="text-base md:text-lg">Быстрая подготовка писем и запросов поставщикам</p>
             </div>
             <div className="flex items-start gap-3">
               <Icon name="Search" className="text-primary shrink-0 mt-1" size={24} />
-              <p className="text-lg">Поиск альтернативных производителей за минуты</p>
+              <p className="text-base md:text-lg">Поиск альтернативных производителей за минуты</p>
             </div>
           </div>
 
-          <Button size="lg" onClick={scrollToForm} className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg mb-8">
+          <Button size="lg" onClick={scrollToForm} className="w-full md:w-auto bg-primary hover:bg-primary/90 text-white px-6 md:px-8 py-5 md:py-6 text-base md:text-lg mb-6 md:mb-8">
             Получить программу тренинга
           </Button>
 
@@ -121,52 +166,52 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-gray-50">
+      <section className="py-12 md:py-16 px-4 bg-gray-50">
         <div className="container max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center text-foreground">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-10 text-center text-foreground">
             Проблемы закупщиков, которые ИИ решает за минуты
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
             <Card className="border-l-4 border-l-destructive">
-              <CardContent className="p-6">
+              <CardContent className="p-4 md:p-6">
                 <div className="flex items-start gap-3">
                   <Icon name="X" className="text-destructive shrink-0 mt-1" size={20} />
-                  <p className="text-lg">Ручное сравнение КП в разных форматах — долго и неудобно</p>
+                  <p className="text-base md:text-lg">Ручное сравнение КП в разных форматах — долго и неудобно</p>
                 </div>
               </CardContent>
             </Card>
 
             <Card className="border-l-4 border-l-destructive">
-              <CardContent className="p-6">
+              <CardContent className="p-4 md:p-6">
                 <div className="flex items-start gap-3">
                   <Icon name="X" className="text-destructive shrink-0 mt-1" size={20} />
-                  <p className="text-lg">Поиск реальных производителей превращается в хаос</p>
+                  <p className="text-base md:text-lg">Поиск реальных производителей превращается в хаос</p>
                 </div>
               </CardContent>
             </Card>
 
             <Card className="border-l-4 border-l-destructive">
-              <CardContent className="p-6">
+              <CardContent className="p-4 md:p-6">
                 <div className="flex items-start gap-3">
                   <Icon name="X" className="text-destructive shrink-0 mt-1" size={20} />
-                  <p className="text-lg">Письма поставщикам каждый раз пишутся «с нуля»</p>
+                  <p className="text-base md:text-lg">Письма поставщикам каждый раз пишутся «с нуля»</p>
                 </div>
               </CardContent>
             </Card>
 
             <Card className="border-l-4 border-l-destructive">
-              <CardContent className="p-6">
+              <CardContent className="p-4 md:p-6">
                 <div className="flex items-start gap-3">
                   <Icon name="X" className="text-destructive shrink-0 mt-1" size={20} />
-                  <p className="text-lg">Договоры и ТЗ большие — скрытые риски сложно заметить</p>
+                  <p className="text-base md:text-lg">Договоры и ТЗ большие — скрытые риски сложно заметить</p>
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          <div className="bg-primary/10 border-l-4 border-l-primary p-6 rounded-lg">
-            <p className="text-lg font-semibold text-foreground mb-2">
+          <div className="bg-primary/10 border-l-4 border-l-primary p-4 md:p-6 rounded-lg">
+            <p className="text-base md:text-lg font-semibold text-foreground mb-2">
               На рутинные операции уходит 60–80% рабочего времени.
             </p>
             <p className="text-muted-foreground">
@@ -176,15 +221,15 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-16 px-4">
+      <section className="py-12 md:py-16 px-4">
         <div className="container max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center text-foreground">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-10 text-center text-foreground">
             Чем этот тренинг отличается от "общих курсов по ChatGPT"
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             <div>
-              <h3 className="text-xl font-bold mb-6 text-muted-foreground flex items-center gap-2">
+              <h3 className="text-lg md:text-xl font-bold mb-4 md:mb-6 text-muted-foreground flex items-center gap-2">
                 <Icon name="X" className="text-destructive" size={24} />
                 Не будет:
               </h3>
@@ -242,24 +287,24 @@ const Index = () => {
 
       <section id="program" className="py-16 px-4 bg-gray-50">
         <div className="container max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center text-foreground">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4 text-center text-foreground">
             Программа тренинга (8 часов практики)
           </h2>
-          <p className="text-center text-xl text-muted-foreground mb-10">
+          <p className="text-center text-base md:text-lg lg:text-xl text-muted-foreground mb-6 md:mb-10">
             Работаем на ваших задачах, документах, КП и Excel.
           </p>
 
           <Accordion type="single" collapsible className="space-y-4">
-            <AccordionItem value="module-1" className="bg-white border rounded-lg px-6">
+            <AccordionItem value="module-1" className="bg-white border rounded-lg px-4 md:px-6">
               <AccordionTrigger className="text-left hover:no-underline">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <span className="text-primary font-bold text-lg">1</span>
+                <div className="flex items-center gap-3 md:gap-4">
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <span className="text-primary font-bold text-base md:text-lg">1</span>
                   </div>
-                  <h3 className="text-xl font-bold">Модуль 1. Поиск и проверка поставщиков (Sourcing)</h3>
+                  <h3 className="text-base md:text-xl font-bold">Модуль 1. Поиск и проверка поставщиков (Sourcing)</h3>
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="pl-16 pt-4">
+              <AccordionContent className="pl-8 md:pl-16 pt-4">
                 <ul className="space-y-3 mb-4">
                   <li className="flex items-start gap-2">
                     <Icon name="Circle" className="shrink-0 mt-1.5" size={8} />
@@ -295,7 +340,7 @@ const Index = () => {
                   <h3 className="text-xl font-bold">Модуль 2. Сравнение КП и работа с данными</h3>
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="pl-16 pt-4">
+              <AccordionContent className="pl-8 md:pl-16 pt-4">
                 <ul className="space-y-3 mb-4">
                   <li className="flex items-start gap-2">
                     <Icon name="Circle" className="shrink-0 mt-1.5" size={8} />
@@ -331,7 +376,7 @@ const Index = () => {
                   <h3 className="text-xl font-bold">Модуль 3. Коммуникации и переговоры</h3>
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="pl-16 pt-4">
+              <AccordionContent className="pl-8 md:pl-16 pt-4">
                 <ul className="space-y-3 mb-4">
                   <li className="flex items-start gap-2">
                     <Icon name="Circle" className="shrink-0 mt-1.5" size={8} />
@@ -367,7 +412,7 @@ const Index = () => {
                   <h3 className="text-xl font-bold">Модуль 4. ТЗ, договоры и оптимизация работы</h3>
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="pl-16 pt-4">
+              <AccordionContent className="pl-8 md:pl-16 pt-4">
                 <ul className="space-y-3 mb-4">
                   <li className="flex items-start gap-2">
                     <Icon name="Circle" className="shrink-0 mt-1.5" size={8} />
@@ -397,16 +442,16 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-16 px-4">
+      <section className="py-12 md:py-16 px-4">
         <div className="container max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center text-foreground">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-10 text-center text-foreground">
             Примеры задач, которые решаем на тренинге
           </h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             <Card className="border-t-4 border-t-primary hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <h3 className="font-bold text-lg mb-3">Кейс 1: Сравнение КП</h3>
+              <CardContent className="p-4 md:p-6">
+                <h3 className="font-bold text-base md:text-lg mb-3">Кейс 1: Сравнение КП</h3>
                 <p className="text-3xl font-bold text-primary mb-2">40 мин → 4 мин</p>
               </CardContent>
             </Card>
@@ -419,8 +464,8 @@ const Index = () => {
             </Card>
 
             <Card className="border-t-4 border-t-primary hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <h3 className="font-bold text-lg mb-3">Кейс 3: Письмо о задержке</h3>
+              <CardContent className="p-4 md:p-6">
+                <h3 className="font-bold text-base md:text-lg mb-3">Кейс 3: Письмо о задержке</h3>
                 <p className="text-muted-foreground">ИИ подготовил сильное письмо → поставщик ускорил поставку.</p>
               </CardContent>
             </Card>
@@ -435,13 +480,13 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-gray-50">
+      <section className="py-12 md:py-16 px-4 bg-gray-50">
         <div className="container max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center text-foreground">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-10 text-center text-foreground">
             Безопасная работа с данными
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
             <Card>
               <CardContent className="p-6">
                 <Icon name="Shield" className="text-primary mb-3" size={32} />
@@ -479,41 +524,41 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-16 px-4">
+      <section className="py-12 md:py-16 px-4">
         <div className="container max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center text-foreground">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-10 text-center text-foreground">
             Что команда получит на следующий день
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
-            <div className="flex items-start gap-3 bg-accent/5 p-4 rounded-lg">
-              <Icon name="CheckCircle2" className="text-accent shrink-0 mt-1" size={24} />
-              <p className="text-lg">сравнение КП — быстрее в 4–10 раз</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 max-w-4xl mx-auto">
+            <div className="flex items-start gap-3 bg-accent/5 p-3 md:p-4 rounded-lg">
+              <Icon name="CheckCircle2" className="text-accent shrink-0 mt-1" size={20} />
+              <p className="text-base md:text-lg">сравнение КП — быстрее в 4–10 раз</p>
             </div>
 
-            <div className="flex items-start gap-3 bg-accent/5 p-4 rounded-lg">
-              <Icon name="CheckCircle2" className="text-accent shrink-0 mt-1" size={24} />
-              <p className="text-lg">готовые шаблоны писем и запросов</p>
+            <div className="flex items-start gap-3 bg-accent/5 p-3 md:p-4 rounded-lg">
+              <Icon name="CheckCircle2" className="text-accent shrink-0 mt-1" size={20} />
+              <p className="text-base md:text-lg">готовые шаблоны писем и запросов</p>
             </div>
 
-            <div className="flex items-start gap-3 bg-accent/5 p-4 rounded-lg">
-              <Icon name="CheckCircle2" className="text-accent shrink-0 mt-1" size={24} />
-              <p className="text-lg">сценарии переговоров под реальные кейсы</p>
+            <div className="flex items-start gap-3 bg-accent/5 p-3 md:p-4 rounded-lg">
+              <Icon name="CheckCircle2" className="text-accent shrink-0 mt-1" size={20} />
+              <p className="text-base md:text-lg">сценарии переговоров под реальные кейсы</p>
             </div>
 
-            <div className="flex items-start gap-3 bg-accent/5 p-4 rounded-lg">
-              <Icon name="CheckCircle2" className="text-accent shrink-0 mt-1" size={24} />
-              <p className="text-lg">чистый нормализованный справочник</p>
+            <div className="flex items-start gap-3 bg-accent/5 p-3 md:p-4 rounded-lg">
+              <Icon name="CheckCircle2" className="text-accent shrink-0 mt-1" size={20} />
+              <p className="text-base md:text-lg">чистый нормализованный справочник</p>
             </div>
 
-            <div className="flex items-start gap-3 bg-accent/5 p-4 rounded-lg">
-              <Icon name="CheckCircle2" className="text-accent shrink-0 mt-1" size={24} />
-              <p className="text-lg">умение быстро находить поставщиков</p>
+            <div className="flex items-start gap-3 bg-accent/5 p-3 md:p-4 rounded-lg">
+              <Icon name="CheckCircle2" className="text-accent shrink-0 mt-1" size={20} />
+              <p className="text-base md:text-lg">умение быстро находить поставщиков</p>
             </div>
 
-            <div className="flex items-start gap-3 bg-accent/5 p-4 rounded-lg">
-              <Icon name="CheckCircle2" className="text-accent shrink-0 mt-1" size={24} />
-              <p className="text-lg">навык работы с договорами и ТЗ</p>
+            <div className="flex items-start gap-3 bg-accent/5 p-3 md:p-4 rounded-lg">
+              <Icon name="CheckCircle2" className="text-accent shrink-0 mt-1" size={20} />
+              <p className="text-base md:text-lg">навык работы с договорами и ТЗ</p>
             </div>
 
             <div className="flex items-start gap-3 bg-accent/5 p-4 rounded-lg md:col-span-2">
@@ -524,7 +569,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-gray-50">
+      <section className="py-12 md:py-16 px-4 bg-gray-50">
         <div className="container max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
             Автор и ведущий тренинга
@@ -545,13 +590,13 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-16 px-4">
+      <section className="py-12 md:py-16 px-4">
         <div className="container max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center text-foreground">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-10 text-center text-foreground">
             Формат участия
           </h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             <Card>
               <CardContent className="p-6 text-center">
                 <Icon name="MapPin" className="text-primary mx-auto mb-3" size={32} />
@@ -583,17 +628,17 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="contact-form" className="py-16 px-4 bg-gradient-to-br from-[#1A1F2C] to-[#2A3F5C] text-white">
+      <section id="contact-form" className="py-12 md:py-16 px-4 bg-gradient-to-br from-[#1A1F2C] to-[#2A3F5C] text-white">
         <div className="container max-w-2xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4 text-center">
             Сделайте работу закупщиков проще и быстрее
           </h2>
-          <p className="text-xl text-center text-blue-100 mb-10">
+          <p className="text-lg md:text-xl text-center text-blue-100 mb-6 md:mb-10">
             Получите программу и расчёт стоимости для вашего отдела.
           </p>
 
           <Card>
-            <CardContent className="p-8">
+            <CardContent className="p-6 md:p-8">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <Input
@@ -630,7 +675,7 @@ const Index = () => {
                 <Button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="w-full bg-primary hover:bg-primary/90 text-white py-6 text-lg disabled:opacity-50"
+                  className="w-full bg-primary hover:bg-primary/90 text-white py-5 md:py-6 text-base md:text-lg disabled:opacity-50"
                 >
                   {isSubmitting ? 'Отправка...' : 'Получить программу и КП'}
                 </Button>
@@ -654,9 +699,9 @@ const Index = () => {
         </div>
       </section>
 
-      <footer className="py-12 px-4 bg-[#1A1F2C] text-white">
+      <footer className="py-8 md:py-12 px-4 bg-[#1A1F2C] text-white">
         <div className="container max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-6 md:mb-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Icon name="Briefcase" className="text-primary" size={24} />
@@ -694,7 +739,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="border-t border-white/10 pt-8">
+          <div className="border-t border-white/10 pt-6 md:pt-8">
             <div className="text-center text-white/40 text-sm">
               <p className="mb-2">© 2024 ИИ в закупках. Все права защищены.</p>
               <p className="text-xs">
